@@ -16,7 +16,7 @@ connectDB();
 app.use(express.json()); // parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // parse form bodies
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000'
+  origin: process.env.CLIENT_URL || 'https://goldentulip-weld.vercel.app/'
 }));
 
 // Serve uploaded files statically
@@ -26,7 +26,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/bookings', bookingRoutes);
 
 // Basic health route
-app.get('/', (req, res) => res.send('Luxuria Booking Backend is running'));
+app.get('/', (req, res) => res.send('Golden Tulip Booking Backend is running'));
 
 // Error handler (simple)
 app.use((err, req, res, next) => {
