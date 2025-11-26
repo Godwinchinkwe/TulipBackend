@@ -16,8 +16,16 @@ connectDB();
 app.use(express.json()); // parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // parse form bodies
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'https://goldentulip-weld.vercel.app/'
+  origin: [
+    process.env.CLIENT_URL,
+    "https://goldentulip-weld.vercel.app",
+    "http://localhost:3000"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
+
 
 // Serve uploaded files statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
