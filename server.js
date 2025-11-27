@@ -7,6 +7,7 @@ const path = require('path');
 const connectDB = require('./config/db');
 const bookingRoutes = require('./routes/bookingRoutes');
 
+
 const app = express();
 
 // Connect to local MongoDB
@@ -14,14 +15,18 @@ connectDB();
 
 // Middleware
 app.use(express.json()); // parse JSON bodies
+app.options("*", cors());
 app.use(express.urlencoded({ extended: true })); // parse form bodies
 app.use(cors({
   origin: [
     process.env.CLIENT_URL,
     "https://goldentulip-weld.vercel.app",
+    "https://airport-golden-tulip-hotel.vercel.app",
     "http://localhost:3000"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
@@ -43,5 +48,5 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message: err.message || 'Server Error' });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
