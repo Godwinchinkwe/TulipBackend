@@ -15,7 +15,6 @@ connectDB();
 
 // Middleware
 app.use(express.json()); // parse JSON bodies
-app.options("*", cors());
 app.use(express.urlencoded({ extended: true })); // parse form bodies
 app.use(cors({
   origin: [
@@ -24,7 +23,6 @@ app.use(cors({
     "https://airport-golden-tulip-hotel.vercel.app",
     "http://localhost:3000"
   ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 
   allowedHeaders: ["Content-Type", "Authorization"],
