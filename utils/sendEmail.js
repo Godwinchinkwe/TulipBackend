@@ -1,34 +1,45 @@
-const nodemailer = require('nodemailer');
+const Brevo = require('@getbrevo/brevo');
 
-const transporter = nodemailer.createTransport({
-  // service: 'gmail',
-  host: 'smtp.gmail.com',
-  port: 587, // use 465 only if 587 is blocked
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-    tls: {
-    rejectUnauthorized: false, // bypass strict TLS verification
-  },
-});
+const apiInstance = new Brevo.TransactionalEmailsApi();
+apiInstance.setApiKey(
+  Brevo.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY
+);
 
 /**
- * sendMail - sends an email
+ * sendMail - sends an email through Brevo
  * @param {Object} options - { to, subject, text, html, attachments }
  */
 const sendMail = async (options) => {
-  const mailOptions = {
-    from: `"Airport Golden Tulip Hotel" <${process.env.EMAIL_USER}>`,
-    to: options.to,
-    subject: options.subject,
-    text: options.text,
-    html: options.html,
-    attachments: options.attachments || []
-  };
+  try {
+    const emailData = {
+      sender: {
+        name: "Airport Golden Tulip Hotel",
+        email: process.env.HOTEL_EMAIL, // sending email
+      },
+      to: [{ email: options.to }],
+      subject: options.subject,
+      htmlContent: options.html || "",
+      textContent: options.text || "",
+    };
 
-  return transporter.sendMail(mailOptions);
+    // Handle file attachments (Brevo requires base64)
+    if (options.attachments && options.attachments.length > 0) {
+      const fs = require('fs');
+
+      emailData.attachment = options.attachments.map((file) => ({
+        name: file.filename,
+        content: fs.readFileSync(file.path).toString("base64"),
+      }));
+    }
+
+    await apiInstance.sendTransacEmail(emailData);
+    console.log("Brevo: Email sent to", options.to);
+
+  } catch (error) {
+    console.error("Brevo Email Error:", error.message);
+    if (error?.response?.body) console.error(error.response.body);
+  }
 };
 
 module.exports = sendMail;
