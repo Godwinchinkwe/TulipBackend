@@ -20,8 +20,8 @@ app.use(cors({
   origin: [
     process.env.CLIENT_URL,
     "https://goldentulip-weld.vercel.app",
-    "https://airport-golden-tulip-hotel.vercel.app",
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "https://airportgoldentuliphotel.com/"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 
