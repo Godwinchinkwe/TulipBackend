@@ -145,8 +145,16 @@ Special Requests: ${specialRequests || 'None'}
     console.error('Error sending email to hotel:', err);
   }
 
+
+
+  res.status(201).json({
+  success: true,
+  booking
+});
+
+
   // Return booking to frontend
-  res.status(201).json(booking);
+  // res.status(201).json(booking);
 });
 
 /**
