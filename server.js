@@ -21,7 +21,8 @@ app.use(cors({
     process.env.CLIENT_URL,
     "https://goldentulip-weld.vercel.app",
     "http://localhost:3000",
-    "https://airportgoldentuliphotel.com"
+    "https://airportgoldentuliphotel.com",
+    "https://www.airportgoldentuliphotel.com"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 
@@ -37,7 +38,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/bookings', bookingRoutes);
 
 // Basic health route
-app.get('/', (req, res) => res.send('Golden Tulip Booking Backend is running'));
+app.get('/', (req, res) => res.send('Airport Golden Tulip Hotel Booking Backend is running'));
 
 // Error handler (simple)
 app.use((err, req, res, next) => {

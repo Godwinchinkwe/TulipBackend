@@ -178,7 +178,7 @@ const createBooking = asyncHandler(async (req, res) => {
       return (
         Number.isInteger(guestsNumber) &&
         guestsNumber >= 1 &&
-        guestsNumber <= 3
+        guestsNumber <= 2
       );
     });
 
@@ -186,7 +186,7 @@ const createBooking = asyncHandler(async (req, res) => {
   if (!validGuestsPerRoom) {
     res.status(400);
     throw new Error(
-      "Each room must have between 1 and 3 guests"
+      "Each room must have between 1 and 2 guests"
     );
   }
 
